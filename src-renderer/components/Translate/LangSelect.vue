@@ -43,6 +43,7 @@ const props = defineProps<{
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css"
 .unwrapped p {
   @apply whitespace-nowrap;
 }

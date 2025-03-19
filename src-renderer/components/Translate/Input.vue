@@ -33,7 +33,7 @@ watchDebounced(
 
 let tid: number | NodeJS.Timeout | undefined = undefined;
 const onClickEdit = () => {
-  edit_mode.value = true;
+  edit_mode.value = !edit_mode.value;
   nextTick(() => {
     ref_text.value.focus();
 
@@ -128,6 +128,40 @@ onMounted(() => {
       class="du-card-body p-0 max-h-full flex flex-col-reverse lg:flex-col"
       v-auto-animate="{ duration: 200 }"
     >
+    <BaseToolsbar class="flex-none">
+        <template #start>
+          <!-- <div class="flex-1 flex items-center gap-1">
+            <TranslateTypeIcon />
+          </div> -->
+        </template>
+        <template #end>
+          <div class="flex-none flex flex-row-reverse">
+            <!-- <Transition name="icon">
+              <div
+                class="du-btn du-btn-ghost du-btn-circle size-6 min-h-0 min-w-0 lg:hidden"
+                @click="edit_mode = !edit_mode"
+                v-if="edit_mode"
+              >
+                <icon-gravity-ui-chevrons-up />
+              </div>
+            </Transition> -->
+            <Transition name="icon">
+              <div class="btn-icon lg:hidden" @click="onClickEdit">
+                <icon-gravity-ui-chevrons-up v-if="edit_mode" />
+                <icon-gravity-ui-pencil-to-square v-else />
+              </div>
+            </Transition>
+            <div class="btn-icon">
+              <icon-gravity-ui-copy />
+            </div>
+            <TranslateVolume
+              class="btn-icon"
+              @on-play="onClickPlay"
+              v-if="store.sourceInput"
+            />
+          </div>
+        </template>
+      </BaseToolsbar>
       <div class="flex-1 flex overflow-y-auto flex-col relative" ref="refTextDiv">
         <div
           v-if="imgs.length"
@@ -155,37 +189,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <BaseToolsbar class="flex-none">
-        <template #start>
-          <div class="flex-1 flex items-center gap-1">
-            <TranslateTypeIcon />
-          </div>
-        </template>
-        <template #end>
-          <div class="flex-none flex flex-row-reverse">
-            <Transition name="icon">
-              <div
-                class="du-btn du-btn-ghost du-btn-circle size-6 min-h-0 min-w-0 lg:hidden"
-                @click="edit_mode = !edit_mode"
-                v-if="edit_mode"
-              >
-                <icon-gravity-ui-chevrons-up />
-              </div>
-            </Transition>
-            <div class="btn-icon">
-              <icon-gravity-ui-copy />
-            </div>
-            <div class="btn-icon" @click="onClickEdit">
-              <icon-gravity-ui-pencil-to-square />
-            </div>
-            <TranslateVolume
-              class="btn-icon"
-              @on-play="onClickPlay"
-              v-if="store.sourceInput"
-            />
-          </div>
-        </template>
-      </BaseToolsbar>
+
     </div>
   </div>
 </template>

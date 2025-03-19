@@ -6,7 +6,6 @@ defineOptions({
 import markdownit from "markdown-it";
 import highlightjs from "highlight.js";
 import "highlight.js/styles/github.css";
-import { _0 } from "#tailwind-config/theme/backdropBlur";
 
 const props = defineProps<{
   Content?: string;
@@ -14,6 +13,7 @@ const props = defineProps<{
   FontAdapter?: boolean;
   FontThreshold?: number;
   Placeholder?: string;
+  StreamMode?: boolean;
 }>();
 const parser = new DOMParser();
 
@@ -51,6 +51,22 @@ const fontThreshold = computed(() => {
 
 const { $rootFontSize } = useNuxtApp();
 
+const hasUnclosedCodeBlock = (content: string): boolean => {
+  const codeBlockMarkers = content.match(/```/g);
+  return codeBlockMarkers ? codeBlockMarkers.length % 2 !== 0 : false;
+};
+
+const getLastUnclosedCodeBlockStart = (content: string): number => {
+  const matches = content.match(/```[\s\S]*$/);
+  if (matches && matches.index !== undefined) {
+    const lastIndex = content.lastIndexOf('```');
+    if (hasUnclosedCodeBlock(content.substring(0, lastIndex + 3))) {
+      return lastIndex;
+    }
+  }
+  return -1;
+};
+
 const textAfter = (parent: HTMLElement) => {
   function findTheLastNode(parent: HTMLElement) {
     if (parent.childNodes.length === 0) {
@@ -79,6 +95,13 @@ const textAfter = (parent: HTMLElement) => {
   const lastTextNode = findTheLastNode(parent);
 
   if (lastTextNode) {
+    if (props.StreamMode && 
+        (lastTextNode.nodeType === Node.ELEMENT_NODE && 
+         (lastTextNode as HTMLElement).tagName === 'CODE' || 
+         lastTextNode.parentElement?.tagName === 'CODE')) {
+      return;
+    }
+    
     if (lastTextNode.nodeType === Node.TEXT_NODE) {
       getFirstParentElement(lastTextNode).classList.add("p-after-loading");
     } else {
@@ -87,20 +110,64 @@ const textAfter = (parent: HTMLElement) => {
   }
 };
 
+const lastContent = ref("");
+const processedContent = ref("");
+
 const markdownText = computed(() => {
   let content = "";
   if (props.Content) {
     content = props.Content;
+    
+    if (props.StreamMode) {
+      if (hasUnclosedCodeBlock(content)) {
+        const codeBlockStart = getLastUnclosedCodeBlockStart(content);
+        
+        if (codeBlockStart !== -1) {
+          const beforeCodeBlock = content.substring(0, codeBlockStart);
+          const codeBlockContent = content.substring(codeBlockStart);
+          
+          let renderedBeforeContent = "";
+          if (beforeCodeBlock) {
+            renderedBeforeContent = md.render(beforeCodeBlock);
+          }
+          
+          const codeBlockLines = codeBlockContent.split('\n');
+          const codeBlockFirstLine = codeBlockLines[0];
+          const codeBlockRest = codeBlockLines.slice(1).join('\n');
+          
+          const langMatch = codeBlockFirstLine.match(/```(\w*)/);
+          const language = langMatch && langMatch[1] ? langMatch[1] : '';
+          
+          const tempCodeBlock = `${codeBlockFirstLine}\n${codeBlockRest}\n\`\`\``;
+          const renderedCodeBlock = md.render(tempCodeBlock);
+          
+          const doc = parser.parseFromString(renderedBeforeContent + renderedCodeBlock, "text/html");
+          
+          if (props.ShowTextLoading) {
+            textAfter(doc.body);
+          }
+          
+          processedContent.value = content;
+          lastContent.value = content;
+          return doc.body.innerHTML;
+        }
+      }
+    }
   } else if (props.Placeholder && !props.ShowTextLoading) {
     content = props.Placeholder;
   } else {
     return "";
   }
+  
   const html = md.render(content);
   const doc = parser.parseFromString(html, "text/html");
+  
   if (props.ShowTextLoading) {
     textAfter(doc.body);
   }
+  
+  processedContent.value = content;
+  lastContent.value = content;
   return doc.body.innerHTML;
 });
 
@@ -165,7 +232,6 @@ const autoFontSizeForce = () => {
   const minHeight = fontThreshold.value
     ? fontThreshold.value
     : rootElement.value.clientHeight;
-  // console.log("minHeight=====================", minHeight);
   if (markdownText.value && markdownText.value !== "") {
     let i = 0;
     for (; i < fontSizes.length; i++) {
@@ -213,6 +279,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css"
 :deep(.p-after-loading)::after {
   content: "";
   display: block;

@@ -3,6 +3,7 @@ import ViteComponents from "unplugin-vue-components/vite";
 import Icons from "unplugin-icons/vite";
 import path from "path";
 import * as cheerio from "cheerio";
+import tailwindcss from "@tailwindcss/vite";
 
 // loader helpers
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
@@ -10,41 +11,32 @@ import { FileSystemIconLoader } from "unplugin-icons/loaders";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
+
   // nitro: {
   //   preset: "static",
   // },
   srcDir: "src-renderer",
+
   modules: [
     "unplugin-icons/nuxt",
     "@pinia/nuxt",
     "@nuxt/fonts",
-    "@nuxt/ui",
+    // "@nuxt/ui",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
     "@formkit/auto-animate/nuxt",
     "nuxt-headlessui",
-    // "nuxt-primevue",
   ],
-  // primevue: {
-  //   components: {
-  //     prefix: "P",
-  //   },
-  //   directives: {
-  //     prefix: "p-",
-  //   },
-  //   composables: {
-  //     include: ["*", { name: "usePrimeVueToast", use: { as: "useToast" } }],
-  //   },
-  //   options: {
-  //     unstyled: true,
-  //   },
-  // },
+  css: ["~/assets/css/main.css"],
+
   i18n: {
     vueI18n: "./i18n.config.ts",
   },
+
   headlessui: {
     prefix: "H",
   },
+
   vite: {
     build: {
       ssr: false,
@@ -107,14 +99,18 @@ export default defineNuxtConfig({
           }
         },
       }),
+      tailwindcss(),
     ],
   },
   devServer: {
     port: 1234,
   },
+
   $development: {
     devtools: {
       enabled: true,
     },
   },
+
+  compatibilityDate: "2025-03-12",
 });

@@ -1,45 +1,25 @@
-body {
-  font-family: ui-sans-serif, "Ubuntu", Roboto, sans-serif;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwind-scrollbar";
+@plugin "daisyui" {
+  themes: fantasy --default, dracula --prefersdark;
+  prefix: "du-";
+  logs: true;
 }
 
-/* html,
+body {
+  font-family: "Fira Sans", -apple-system, ui-sans-serif, "Ubuntu", Roboto, sans-serif;
+}
+
+html,
 body,
 div,
 textarea,
+ul,
 input {
-  scrollbar-width: thin;
-} */
-
-/* width */
-::-webkit-scrollbar {
-  width: 6px;
+  @apply scrollbar-thin;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f16b;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #88888881;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #5555556e;
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: #a9a9a9;
-}
-
-@supports not selector(::-webkit-scrollbar) {
-  html,
-  body,
-  div,
-  textarea,
-  input {
-    scrollbar-width: thin;
-  }
+.btn-icon {
+  @apply du-btn du-btn-ghost du-btn-circle size-6 min-h-0 min-w-0;
 }

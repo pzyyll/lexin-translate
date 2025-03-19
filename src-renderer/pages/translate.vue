@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "notstyle",
+  layout: "titlebar",
 });
 import { vElementSize } from "@vueuse/components";
 
@@ -47,13 +47,6 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
       relative: snapEdge,
     }"
   >
-    <TranslateToolsbar
-      v-model="toolsbarIsOver"
-      class="flex-none min-h-1"
-      :class="{
-        'absolute top-0 z-10': snapEdge && !toolsbarIsOver,
-      }"
-    />
     <div
       class="flex-1 flex flex-col lg:flex-row lg:pt-1 overflow-y-auto"
       :class="[
@@ -79,6 +72,10 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
         v-if="lg"
         class="flex-initial du-divider du-divider-horizontal mx-0 py-4"
       ></div>
+      <div class="items-center">
+        <TranslateTypeIcon />
+      </div>
+      <!-- Closing tag for the comments above -->
       <div
         id="translate-output"
         class="bg-transparent flex flex-1 flex-col w-auto h-full lg:max-h-full overflow-y-auto gap-2"

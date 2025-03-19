@@ -59,6 +59,7 @@ watch(selected, (v, pre) => {
   </USelectMenu>
 </template>
 <style scoped>
+@reference "~/assets/css/main.css"
 .unwrapped p {
   @apply whitespace-nowrap;
 }

@@ -158,9 +158,14 @@ onUnmounted(() => {});
       <SvgsIcon name="IconDeepL" />
     </template>
   </BaseToolsbar>
+
+  <div class="h-[512px] w-full flex justify-center items-center">
+    <button class="du-btn">点击查询精神状态</button>
+  </div>
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css"
 .p-after-loading::after {
   content: "";
   display: block;

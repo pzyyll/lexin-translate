@@ -56,8 +56,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="flex bg-gray-100 rounded-2xl shadow-md">
-    <TranslateTypeSelect :options="options" v-model="store.selectedTranslateTypes" />
+  <div class="flex">
+    <!-- <TranslateTypeSelect :options="options" v-model="store.selectedTranslateTypes" /> -->
     <div class="flex items-center pl-1 pr-2">
       <TranslateLangSelect
         :options="languages"

@@ -64,7 +64,7 @@ pub async fn translate_text(
         let url = api.url.clone();
         let token = api.token.clone();
         // println!("{:?}", api);
-        // println!("api_type: {api_type}, text: {text}, from: {from}, to: {to}");
+        println!("api_type: {api_type}, text: {text}, from: {from}, to: {to}");
 
         let payload = json!({
             "text": text,
@@ -160,8 +160,9 @@ pub async fn translate_speech(
 
         if res.status().is_success() {
             let bytes = res.bytes().await.map_err(|e| e.to_string())?;
+            let base64_data = BASE64_STANDARD.encode(&bytes);
             return Ok(json!({
-                "data": bytes
+                "data": base64_data
             }));
         }
         return Err(format!("Error: {:?}", res.text().await));
