@@ -14,7 +14,7 @@ const ctrlState = useKeyModifier("Control");
 
 watch(selected, (v, pre) => {
   //check length now.value
-  if (v.length <= 0) {
+  if (!v || v.length <= 0) {
     selected.value = pre;
     return;
   }

@@ -1,36 +1,118 @@
 [
-  { "name": "中文", "code": "zh" },
-  { "name": "English", "code": "en" },
-  { "name": "Français", "code": "fr" },
-  { "name": "Deutsch", "code": "de" },
-  { "name": "日本語", "code": "ja" },
-  { "name": "한국어", "code": "ko" },
-  { "name": "Español", "code": "es" },
-  { "name": "Italiano", "code": "it" },
-  { "name": "Nederlands", "code": "nl" },
-  { "name": "Polski", "code": "pl" },
-  { "name": "Português", "code": "pt" },
-  { "name": "Русский", "code": "ru" },
-  { "name": "Türkçe", "code": "tr" },
-  { "name": "العربية", "code": "ar" },
-  { "name": "हिन्दी", "code": "hi" },
-  { "name": "ไทย", "code": "th" },
-  { "name": "Tiếng Việt", "code": "vi" },
-  { "name": "Bahasa Indonesia", "code": "id" },
-  { "name": "Melayu", "code": "ms" },
-  { "name": "Filipino", "code": "fil" },
-  { "name": "Svenska", "code": "sv" },
-  { "name": "Norsk", "code": "no" },
-  { "name": "Dansk", "code": "da" },
-  { "name": "Suomi", "code": "fi" },
-  { "name": "Čeština", "code": "cs" },
-  { "name": "Slovenčina", "code": "sk" },
-  { "name": "Română", "code": "ro" },
-  { "name": "Magyar", "code": "hu" },
-  { "name": "Pусский", "code": "ru" },
-  { "name": "Українська", "code": "uk" },
-  { "name": "Беларуская", "code": "be" },
-  { "name": "Български", "code": "bg" },
-  { "name": "Ελληνικά", "code": "el" },
-  { "name": "Türkçe", "code": "tr" }
+  {
+    "language": "BG",
+    "name": "保加利亚语"
+  },
+  {
+    "language": "CS",
+    "name": "捷克共和国"
+  },
+  {
+    "language": "DA",
+    "name": "丹麦语"
+  },
+  {
+    "language": "DE",
+    "name": "德国"
+  },
+  {
+    "language": "EL",
+    "name": "希腊文"
+  },
+  {
+    "language": "EN",
+    "name": "英语"
+  },
+  {
+    "language": "ES",
+    "name": "西班牙语"
+  },
+  {
+    "language": "ET",
+    "name": "爱沙尼亚语"
+  },
+  {
+    "language": "FI",
+    "name": "芬兰语"
+  },
+  {
+    "language": "FR",
+    "name": "法语"
+  },
+  {
+    "language": "HU",
+    "name": "匈牙利语"
+  },
+  {
+    "language": "ID",
+    "name": "印尼语"
+  },
+  {
+    "language": "IT",
+    "name": "意大利语"
+  },
+  {
+    "language": "JA",
+    "name": "日语"
+  },
+  {
+    "language": "KO",
+    "name": "韩语"
+  },
+  {
+    "language": "LT",
+    "name": "立陶宛语"
+  },
+  {
+    "language": "LV",
+    "name": "拉脱维亚语"
+  },
+  {
+    "language": "NB",
+    "name": "挪威语"
+  },
+  {
+    "language": "NL",
+    "name": "荷兰语"
+  },
+  {
+    "language": "PL",
+    "name": "波兰语"
+  },
+  {
+    "language": "PT",
+    "name": "葡萄牙语"
+  },
+  {
+    "language": "RO",
+    "name": "罗马尼亚语"
+  },
+  {
+    "language": "RU",
+    "name": "俄罗斯"
+  },
+  {
+    "language": "SK",
+    "name": "斯洛伐克语"
+  },
+  {
+    "language": "SL",
+    "name": "斯洛文尼亚语"
+  },
+  {
+    "language": "SV",
+    "name": "瑞典语"
+  },
+  {
+    "language": "TR",
+    "name": "土耳其语"
+  },
+  {
+    "language": "UK",
+    "name": "乌克兰"
+  },
+  {
+    "language": "ZH",
+    "name": "中文"
+  }
 ]

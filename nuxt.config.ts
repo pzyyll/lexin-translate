@@ -21,20 +21,15 @@ export default defineNuxtConfig({
     "unplugin-icons/nuxt",
     "@pinia/nuxt",
     "@nuxt/fonts",
-    // "@nuxt/ui",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
     "@formkit/auto-animate/nuxt",
-    "nuxt-headlessui",
+    "reka-ui",
   ],
   css: ["~/assets/css/main.css"],
 
   i18n: {
     vueI18n: "./i18n.config.ts",
-  },
-
-  headlessui: {
-    prefix: "H",
   },
 
   vite: {

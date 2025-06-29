@@ -3,7 +3,7 @@
     "*.css": "tailwindcss"
   },
   "editor.quickSuggestions": {
-    "strings": true
+    "strings": "on"
   },
   "tailwindCSS.experimental.configFile": "src-renderer/assets/css/main.css",
   "tailwindCSS.experimental.classRegex": [

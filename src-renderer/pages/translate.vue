@@ -72,7 +72,7 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
         v-if="lg"
         class="flex-initial du-divider du-divider-horizontal mx-0 py-4"
       ></div>
-      <div class="items-center">
+      <div class="flex justify-center">
         <TranslateTypeIcon />
       </div>
       <!-- Closing tag for the comments above -->

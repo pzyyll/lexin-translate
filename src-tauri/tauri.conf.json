@@ -25,6 +25,9 @@
       "icons/icon.icns",
       "icons/icon.ico",
       "icons/black-bg/icon.ico"
+    ],
+    "resources": [
+      "resources/languages.json"
     ]
   },
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json"
