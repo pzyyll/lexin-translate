@@ -25,3 +25,6 @@ logs
 !.env.example
 
 **/.venv/*
+
+.vscode
+.roomodes
