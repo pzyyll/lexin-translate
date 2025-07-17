@@ -13,38 +13,46 @@ function getSelectedTypeLabel(value: string): string {
 
 const translateApiStore = useTranslateApiStore();
 
+const channelRef = useTemplateRef<any>('channelRef');
+
+const isOpen = defineModel<boolean>('isOpen', { default: false });
+
 const props = defineProps<{
-	value?: Translate.Channel;
-	apiType?: TranslateApiTypeValue;
+	channelData?: Translate.Channel;
 }>();
 
 const defaultData = ref<Translate.Channel>({
 	id: '',
 	name: '',
-	api_type: TranslateApiType.OpenAI,
+	api_type: '',
 	api_config: {},
 	enable: false
 });
 
-const data = computed<Translate.Channel>({
-	get: () => props.value || defaultData.value,
+const data = computed({
+	get: () => props.channelData || defaultData.value,
 	set: (value) => {
-		if (props.value) {
-			Object.assign(props.value, value);
-		} else {
-			defaultData.value = value;
-		}
+		defaultData.value = value;
 	}
 });
 
-const channelRef = useTemplateRef<any>('channelRef');
+const customName = computed({
+	get: () => data.value.name,
+	set: (value) => {
+		data.value.name = value;
+	}
+});
 
-const isOpen = ref(false);
-const selectType = ref('');
-const customName = ref('');
+const apiType = computed({
+	get: () => data.value.api_type,
+	set: (value) => {
+		console.log('Setting API type:', value);
+		data.value.api_type = value;
+	}
+});
 
 const showTest = computed(() => {
-	if (!selectType.value) return false;
+	if (!apiType.value) return false;
 	if (channelRef.value) {
 		return typeof channelRef.value.TestConnection === 'function';
 	}
@@ -83,7 +91,7 @@ async function handleSave() {
 
 	console.log('Saving channel configuration:', data.value);
 
-	if (!selectType.value) {
+	if (!apiType.value) {
 		console.warn('Please select an API type before saving.');
 		return;
 	}
@@ -98,28 +106,19 @@ async function handleSave() {
 }
 
 function resetDialog() {
-	customName.value = '';
-	defaultData.value = {
-		id: '',
-		name: '',
-		api_type: TranslateApiType.OpenAI,
-		api_config: {},
-		enable: false
-	};
 	hasTriggerTest.value = false;
 	testResult.value = false;
 	isTesting.value = false;
 	channelHasError.value = false;
 }
 
-watch(selectType, () => {
+watch(apiType, () => {
 	resetDialog();
 });
 
 watch(isOpen, (newValue) => {
 	if (newValue) {
-		// Reset the selectType when the dialog opens
-		selectType.value = '';
+		// Reset the selected API type when the dialog opens
 		resetDialog();
 	}
 });
@@ -135,7 +134,7 @@ onErrorCaptured((err, instance, info) => {
 <template>
 	<DialogRoot v-model:open="isOpen">
 		<DialogTrigger asChild>
-			<HomeComponentNewCard text="new-translate-api" />
+			<slot> </slot>
 		</DialogTrigger>
 		<DialogPortal>
 			<Transition name="fade">
@@ -151,7 +150,7 @@ onErrorCaptured((err, instance, info) => {
 						<fieldset class="du-fieldset">
 							<div class="flex flex-col gap-1.5">
 								<label class="du-label">{{ $t('api-type') }}</label>
-								<select class="du-select du-select-xs" v-model="selectType">
+								<select class="du-select du-select-xs" v-model="apiType" :disabled="data.id !== ''">
 									<option value="" disabled selected>{{ $t('channel-select') }}</option>
 									<option v-for="type in channelTypes" :key="type.value" :value="type.value">
 										{{ $t(type.label) }}
@@ -160,12 +159,12 @@ onErrorCaptured((err, instance, info) => {
 							</div>
 
 							<Transition name="config-fade">
-								<div class="flex flex-col gap-1.5" v-if="selectType !== ''">
+								<div class="flex flex-col gap-1.5" v-if="apiType !== ''">
 									<label class="du-label">{{ $t('custom-name') }}</label>
 									<input
 										type="text"
 										class="du-input du-input-xs"
-										:placeholder="$t(getSelectedTypeLabel(selectType))"
+										:placeholder="$t(getSelectedTypeLabel(apiType))"
 										v-model="customName"
 									/>
 								</div>
@@ -178,7 +177,7 @@ onErrorCaptured((err, instance, info) => {
 										v-model="data"
 										ref="channelRef"
 										:name="customName"
-										v-if="selectType == TranslateApiType.OpenAI && !channelHasError"
+										v-if="apiType === TranslateApiType.OpenAI && !channelHasError"
 									/>
 								</template>
 							</Transition>
@@ -211,7 +210,7 @@ onErrorCaptured((err, instance, info) => {
 								<button class="du-btn du-btn-ghost du-btn-sm">{{ $t('cancel') }}</button>
 							</DialogClose>
 
-							<button class="du-btn du-btn-sm" @click="handleSave" :disabled="!selectType">
+							<button class="du-btn du-btn-sm" @click="handleSave" :disabled="!apiType">
 								{{ $t('save') }}
 							</button>
 						</div>

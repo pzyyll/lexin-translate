@@ -29,10 +29,10 @@ const config = computed<Config>(() => {
 	return data.value.api_config;
 });
 
-async function TestConnection() {
+async function TestConnection(): Promise<boolean> {
 	if (!config.value.apiKey) {
 		console.warn('API key is required for testing connection.');
-		return;
+		return false;
 	}
 
 	console.log('Testing connection with:', {
@@ -41,6 +41,7 @@ async function TestConnection() {
 		model: config.value.model,
 		temperature: config.value.temperature
 	});
+	return true;
 }
 
 watch(

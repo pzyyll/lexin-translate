@@ -26,7 +26,9 @@ export const useTranslateApiStore = defineStore('translate-api', () => {
 		channels.value.push(channel);
 	}
 
-	async function UpdateChannel(channel: Translate.Channel) {
+	async function UpdateChannel(
+		channel: Partial<Translate.Channel> & Pick<Translate.Channel, 'id'>
+	) {
 		if (!channels.value) return;
 
 		const index = channels.value.findIndex((c) => c.id === channel.id);
@@ -34,17 +36,7 @@ export const useTranslateApiStore = defineStore('translate-api', () => {
 			return console.error(`Channel with ID ${channel.id} not found`);
 		}
 
-		channels.value[index] = channel;
-	}
-
-	async function UpdateChannelField(channelId: string, field: keyof Translate.Channel, value: any) {
-		if (!channels.value) return;
-
-		const channel = channels.value.find((c) => c.id === channelId);
-		if (!channel) {
-			return console.error(`Channel with ID ${channelId} not found`);
-		}
-		(channel as any)[field] = value;
+		channels.value[index] = { ...channels.value[index], ...channel };
 	}
 
 	async function DeleteChannel(channelId: string) {
@@ -57,7 +49,6 @@ export const useTranslateApiStore = defineStore('translate-api', () => {
 		GetChannelById,
 		AddChannel,
 		UpdateChannel,
-		UpdateChannelField,
 		DeleteChannel
 	};
 });

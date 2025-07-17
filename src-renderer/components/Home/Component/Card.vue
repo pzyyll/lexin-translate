@@ -6,6 +6,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
 	clickDelete: void;
+	clickEdit: void;
 	switchChange: [value: boolean];
 }>();
 
@@ -43,7 +44,7 @@ const switchOn = computed({
 						class="du-toggle du-toggle-xs du-toggle-success mx-2"
 					/>
 
-					<button class="du-btn du-btn-ghost du-btn-xs">
+					<button class="du-btn du-btn-ghost du-btn-xs" @click="$emit('clickEdit')">
 						<icon-gravity-ui-pencil-to-square />
 					</button>
 

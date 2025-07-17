@@ -16,7 +16,6 @@ declare global {
 		declare interface Channel {
 			id: string;
 			name: string;
-			// pluginId: string; TODO: Add pluginId to support multiple plugins
 			api_type: string;
 			api_config: any;
 			enable: boolean;
