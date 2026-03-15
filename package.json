@@ -1,6 +1,7 @@
 {
 	"name": "nuxt-app",
 	"private": true,
+    "license": "GPL-3.0-or-later",
 	"type": "module",
 	"scripts": {
 		"tauri:dev": "bun tauri dev --config src-tauri/tauri-dev.conf.json",
